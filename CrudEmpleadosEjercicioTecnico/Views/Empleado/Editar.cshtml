@@ -1,0 +1,130 @@
+﻿@model CrudEmpleadosEjercicioTecnico.Models.Empleado
+
+@{
+    ViewData["Title"] = "Editar Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">CRUD Empleados</h1>
+
+<hr />
+<div class="row">
+    <div class="col-12">
+        <div class="card border">
+            <div class="card-header">
+                <h3><strong>Editar un empleados</strong></h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <form asp-action="Editar" enctype="multipart/form-data">
+                <input type="hidden" asp-for="IdEmpleado" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <canvas id="canvas" width="200" height="200" class="rounded-circle"></canvas>
+                    </div>
+                    <div align="center" class="col-4">
+                        <img type="image" id="imagenPerfil" src="@Model.FotoEmpleado" class="rounded-circle" height="200" width="200" />
+                        <input type="hidden" id="hidden" asp-for="FotoEmpleado" />                    
+                    </div>
+                    <div class="col-4">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FotoEmpleado" class="control-label"></label>
+                    <div class="row">
+                        <div class="custom-file col-6">
+                            <input type="file" asp-for="FotoEmpleado" class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" for="customFile">Escoge Archivo</label>
+                            <span asp-validation-for="FotoEmpleado" class="text-danger"></span>
+                        </div>
+                        <div class="custom-file col-6">
+                            <a class="btn btn-outline-info col-12" id="abrirModal" data-toggle="modal" data-target="#modalTomarFoto"><i class="fas fa-camera"></i> Tomar Foto</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NombreEmpleado" class="control-label"></label>
+                    <input asp-for="NombreEmpleado" class="form-control" />
+                    <span asp-validation-for="NombreEmpleado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApellidosEmpleado" class="control-label"></label>
+                    <input asp-for="ApellidosEmpleado" class="form-control" />
+                    <span asp-validation-for="ApellidosEmpleado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmailEmpleado" class="control-label"></label>
+                    <input asp-for="EmailEmpleado" class="form-control" />
+                    <span asp-validation-for="EmailEmpleado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TelefonoEmpleado" class="control-label"></label>
+                    <input asp-for="TelefonoEmpleado" class="form-control" />
+                    <span asp-validation-for="TelefonoEmpleado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FecNacEmpleado" class="control-label"></label>
+                    <input asp-for="FecNacEmpleado" class="form-control" />
+                    <span asp-validation-for="FecNacEmpleado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SalarioEmpleado" class="control-label"></label>
+                    <input asp-for="SalarioEmpleado" class="form-control" />
+                    <span asp-validation-for="SalarioEmpleado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmpresaEmpleado" class="control-label"></label>
+                    <input asp-for="EmpresaEmpleado" value="Empresa de Trabajo" class="form-control" readonly />
+                    <span asp-validation-for="EmpresaEmpleado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Editar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalTomarFoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-danger modal-lg" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading">Tomar Foto</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <div class="video-wrap">
+                    <video controls autoplay playsinline></video>
+                </div>
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                <!--<a class="btn  btn-outline-info" id="record" onclick="comenzarGrabar()">Encender Camara</a>
+                <a class="btn  btn-outline-success" id="stop" onclick="terminarGrabar()" disabled>Tomar Foto</a>-->
+
+                <button class="btn btn-outline-info" id="btn-start-recording" >Encender la Camara</button>
+                <button class="btn btn-outline-success" id="btn-stop-recording" disabled>Tomar Foto</button>
+
+                <a type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts{
+    <script src="~/js/empleadosEdit.js"></script>
+}

@@ -1,0 +1,111 @@
+﻿@*model IEnumerable<CrudEmpleadosEjercicioTecnico.Models.Empleado>*@
+@model CrudEmpleadosEjercicioTecnico.Models.ViewModels.EmpleadoVM 
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">CRUD Empleados</h1>
+<div class="row">
+    <div class="col-12">
+        <div class="float-right">
+            <a asp-action="Crear" asp-controller="Empleado" class="btn btn-outline-success"><i class="fas fa-plus"></i> Nuevo Empleado</a>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-12">
+        <div class="card border">
+            <div class="card-header">
+                <div class="row">
+                    <h3><strong>Lista de Empleados</strong></h3>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <h6>Cantidad de Empleados: @Model.darrEmpleado.Count()</h6>
+                    </div>
+                    <div class="col-3">
+                        <div class="row">
+                            <div class="col-9">
+                                <a class="btn btn-outline-secondary" asp-route-id="@Model.intTipoCambioMXN"><i class="fas fa-dollar-sign"></i> Cambiar Moneda</a>
+                            </div>
+                            <div class="col-3">
+                                @{ 
+                                    string strTipoCambio = string.Empty;
+                                    if (Model.intTipoCambioMXN == 1)
+                                    {
+                                        strTipoCambio = "MXN";
+                                    }
+                                    else
+                                    {
+                                        strTipoCambio = "USD";
+                                    }
+                                }
+                                @strTipoCambio
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @if (Model.darrEmpleado.Count() > 0)
+                {
+                    <table class="table table-bordered table-hover table-striped" id="tablaEmpleados" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(e => e.darrEmpleado[0].FotoEmpleado)</th>
+                                <th>@Html.DisplayNameFor(e => e.darrEmpleado[0].NombreEmpleado)</th>
+                                <th>@Html.DisplayNameFor(e => e.darrEmpleado[0].ApellidosEmpleado)</th>
+                                <th>@Html.DisplayNameFor(e => e.darrEmpleado[0].FecNacEmpleado)</th>
+                                <th>@Html.DisplayNameFor(e => e.darrEmpleado[0].TelefonoEmpleado)</th>
+                                <th>@Html.DisplayNameFor(e => e.darrEmpleado[0].SalarioEmpleado)</th>
+                                <th>@Html.DisplayNameFor(e => e.darrEmpleado[0].EmpresaEmpleado)</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var empleado in Model.darrEmpleado)
+                            {
+                            <tr>
+                                <td><img src="@empleado.FotoEmpleado" class="rounded-circle" height="40" width="40" asp-append-version="true" /> </td>
+                                <td>@Html.DisplayFor(e => empleado.NombreEmpleado)</td>
+                                <td>@Html.DisplayFor(e => empleado.ApellidosEmpleado)</td>
+                                <td>@Html.DisplayFor(e => empleado.FecNacEmpleado)</td>
+                                <td>@Html.DisplayFor(e => empleado.TelefonoEmpleado)</td>
+                                @if ((empleado.SalarioEmpleado < 10000 && Model.intTipoCambioMXN == 1)||(empleado.SalarioEmpleado < 3100 && Model.intTipoCambioMXN == 0))
+                                {
+                                    <td style="font-family:Courier New, Courier, monospace; color: red">@Html.DisplayFor(e => empleado.SalarioEmpleado)</td>
+                                }
+                                else if ((empleado.SalarioEmpleado > 10000 && Model.intTipoCambioMXN == 1) || (empleado.SalarioEmpleado > 3100 && Model.intTipoCambioMXN == 0))
+                                {
+                                    <td style="font-family:Courier New, Courier, monospace; color: green">@Html.DisplayFor(e => empleado.SalarioEmpleado)</td>
+                                }
+                                else
+                                {
+                                    <td style="font-family:Courier New, Courier, monospace; color: black">@Html.DisplayFor(e => empleado.SalarioEmpleado)</td>
+                                }
+                                <td>@Html.DisplayFor(e => empleado.EmpresaEmpleado)</td>
+                                <td>
+                                    <a class="btn btn-outline-success" asp-action="Editar" asp-route-id="@empleado.IdEmpleado"><i class="fas fa-edit"></i> Editar</a>
+                                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@empleado.IdEmpleado"><i class="fas fa-trash"></i> Borrar</a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No hay resgistros</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script src="~/js/empleados.js"></script>
+}
